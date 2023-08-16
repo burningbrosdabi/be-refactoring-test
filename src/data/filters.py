@@ -1,6 +1,6 @@
 
 from django_filters import rest_framework as df_filters
-from .models import Campaign, AdSet, Creative
+from data.models import Campaign, AdSet, Creative
 
 
 class CampaignFilter(df_filters.FilterSet):

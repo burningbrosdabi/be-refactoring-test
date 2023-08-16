@@ -1,19 +1,26 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 
-User = get_user_model()
+# custom user model
+class CustomUser(AbstractUser):
+    USERNAME_FIELD = 'id'
+    REQUIRED_FIELDS = ['username', 'password']
+
+
+    def __str__(self):
+        return self.username
 
 
 class Account(models.Model):
     name = models.CharField(max_length=255)
     adAccountNo = models.CharField(max_length=255, unique=True) 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 class Campaign(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     campaign_name = models.CharField(max_length=100)
     campaignNo = models.CharField(max_length=100, unique=True)
@@ -28,7 +35,7 @@ class Campaign(models.Model):
     
 
 class AdSet(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='adsets')
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     adset_name = models.CharField(max_length=100)
@@ -47,8 +54,8 @@ class AdSet(models.Model):
         verbose_name_plural = 'Ad Sets'
         
 class Creative(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    ad_set = models.ForeignKey(AdSet, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    ad_set = models.ForeignKey(AdSet, on_delete=models.CASCADE, related_name='creatives')
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     creative_name = models.CharField(max_length=100)
     creativeNo = models.CharField(max_length=100, unique=True)

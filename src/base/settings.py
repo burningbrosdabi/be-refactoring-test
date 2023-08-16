@@ -143,6 +143,16 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+
+    # throttling settings
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '10/minute',
+        'user': '10/minute',
+    }
 }
 
 REST_AUTH = {
@@ -150,3 +160,6 @@ REST_AUTH = {
 }
 
 SITE_ID = 1
+
+# custom user model
+AUTH_USER_MODEL = 'data.CustomUser'

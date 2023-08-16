@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Campaign, AdSet, Creative, Account
+from django.contrib.auth.admin import UserAdmin
+from data.models import Campaign, AdSet, Creative, Account, CustomUser
+
+@admin.register(CustomUser)
+class UserAdmin(UserAdmin):
+    list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'is_staff')
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):

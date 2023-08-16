@@ -1,10 +1,31 @@
 import random
 from faker import Faker
-from django.contrib.auth import get_user_model
-from .models import Account, Campaign, AdSet, Creative
+from data.models import Account, Campaign, AdSet, Creative, CustomUser
+from django.core.management.base import BaseCommand
+
+
+# python manage.py seed --mode=refresh
+
+""" Clear all data and creates addresses """
+MODE_REFRESH = "refresh"
+
+""" Clear all data and do not create any object """
+MODE_CLEAR = "clear"
+MODE_PROD = "prod"
 
 fake = Faker()
-User = get_user_model()
+
+class Command(BaseCommand):
+    help = "seed database for testing and development."
+
+    def add_arguments(self, parser):
+        parser.add_argument("--mode", type=str, help="Mode")
+
+    def handle(self, *args, **options):
+        self.stdout.write("seeding data...")
+        generate_test_data()
+        self.stdout.write("done.")
+
 
 def generate_test_data():
     # Create 4 accounts
@@ -13,7 +34,7 @@ def generate_test_data():
         account = Account.objects.create(
             name=fake.company(),
             adAccountNo=fake.unique.random_number(digits=5),
-            user=User.objects.first()
+            user=CustomUser.objects.first()
         )
         accounts.append(account)
 
@@ -21,7 +42,7 @@ def generate_test_data():
     campaigns = []
     for _ in range(26):
         campaign = Campaign.objects.create(
-            user=User.objects.first(),
+            user=CustomUser.objects.first(),
             account=random.choice(accounts),
             campaign_name=fake.sentence(),
             campaignNo=fake.unique.random_number(digits=6),
@@ -37,7 +58,7 @@ def generate_test_data():
     adsets = []
     for _ in range(300):
         adset = AdSet.objects.create(
-            user=User.objects.first(),
+            user=CustomUser.objects.first(),
             campaign=random.choice(campaigns),
             account=random.choice(accounts),
             adset_name=fake.sentence(),
@@ -53,7 +74,7 @@ def generate_test_data():
     # Create 996 creatives
     for _ in range(996):
         Creative.objects.create(
-            user=User.objects.first(),
+            user=CustomUser.objects.first(),
             ad_set=random.choice(adsets),
             account=random.choice(accounts),
             creative_name=fake.sentence(),
@@ -65,5 +86,3 @@ def generate_test_data():
             convCount=random.uniform(10, 100),
             convSales=random.uniform(1000, 10000)
         )
-
-generate_test_data()

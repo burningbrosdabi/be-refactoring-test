@@ -1,9 +1,10 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as df_filters
 from rest_framework import viewsets, permissions, filters
-from .models import Campaign, AdSet, Creative, Account
-from .serializers import CampaignSerializer, AdSetSerializer, CreativeSerializer, AccountSerializer
-from .filters import CampaignFilter, AdSetFilter, CreativeFilter
+from django.db.models import Prefetch
+from data.models import Campaign, AdSet, Creative, Account
+from data.serializers import CampaignSerializer, AdSetSerializer, CreativeSerializer, AccountSerializer
+from data.filters import CampaignFilter, AdSetFilter, CreativeFilter
 
 
 class CampaignViewSet(viewsets.ReadOnlyModelViewSet):
@@ -14,7 +15,8 @@ class CampaignViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ['campaign_name']
 
     def get_queryset(self):
-        return Campaign.objects.all()
+        # use prefetch_related to reduce the number of queries
+        return Campaign.objects.prefetch_related('adsets', 'adsets__creatives').all()
 
 class AdSetViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AdSetSerializer
@@ -24,7 +26,8 @@ class AdSetViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ['adset_name']
 
     def get_queryset(self):
-        return AdSet.objects.all()
+        # use prefetch_related to reduce the number of queries
+        return AdSet.objects.prefetch_related('creatives').all()
 
 class CreativeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CreativeSerializer

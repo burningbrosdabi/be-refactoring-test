@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CampaignViewSet, AdSetViewSet, CreativeViewSet, AccountViewSet
+from data.views import CampaignViewSet, AdSetViewSet, CreativeViewSet, AccountViewSet
 
 router = DefaultRouter()
 router.register(r'campaigns', CampaignViewSet, basename='campaign')
