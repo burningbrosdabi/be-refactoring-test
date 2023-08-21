@@ -1,11 +1,10 @@
+import requests
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as df_filters
 from rest_framework import viewsets, permissions, filters
 from .models import Campaign, AdSet, Creative, Account
 from .serializers import CampaignSerializer, AdSetSerializer, CreativeSerializer, AccountSerializer
 from .filters import CampaignFilter, AdSetFilter, CreativeFilter
-
-
 class CampaignViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CampaignSerializer
     permission_classes = [permissions.IsAuthenticated]
