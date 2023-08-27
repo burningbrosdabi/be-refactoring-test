@@ -8,14 +8,30 @@ class CreativeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AdSetSerializer(serializers.ModelSerializer):
+    creatives = CreativeSerializer(many=True)
+
     class Meta:
         model = AdSet
         fields = '__all__'
         
 class CampaignSerializer(serializers.ModelSerializer):
+    adsets = AdSetSerializer(many=True)
+
     class Meta:
         model = Campaign
-        fields = '__all__'
+        fields = (
+                    "id",
+                    "campaign_name",
+                    "campaignNo",
+                    "cost",
+                    "targetDate",
+                    "clickCount",
+                    "convCount",
+                    "convSales",
+                    "user",
+                    "account",
+                    "adsets"
+        )
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:

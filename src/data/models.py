@@ -1,7 +1,5 @@
 from django.db import models
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from django.contrib.auth.models import User
 
 
 class Account(models.Model):
@@ -48,7 +46,7 @@ class AdSet(models.Model):
         
 class Creative(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    ad_set = models.ForeignKey(AdSet, on_delete=models.CASCADE)
+    ad_set = models.ForeignKey(AdSet, on_delete=models.CASCADE, related_name='creatives')
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     creative_name = models.CharField(max_length=100)
     creativeNo = models.CharField(max_length=100, unique=True)

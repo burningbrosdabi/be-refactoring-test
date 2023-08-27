@@ -5,12 +5,21 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 
-router = routers.DefaultRouter()
-
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
+    # YOUR PATTERNS
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+]
+
+router = routers.DefaultRouter()
+
+urlpatterns += [
+    path('api/auth/', include('dj_rest_auth.urls')),
     path('api/', include(router.urls)),
-    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/data/', include('data.urls')),
     path('admin/', admin.site.urls),
 ]

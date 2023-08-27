@@ -1,7 +1,7 @@
 import random
 from faker import Faker
 from django.contrib.auth import get_user_model
-from .models import Account, Campaign, AdSet, Creative
+from data.models import Account, Campaign, AdSet, Creative
 
 fake = Faker()
 User = get_user_model()
@@ -65,5 +65,3 @@ def generate_test_data():
             convCount=random.uniform(10, 100),
             convSales=random.uniform(1000, 10000)
         )
-
-generate_test_data()

@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+AUTH_USER_MODEL = 'auth.User'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    'drf_spectacular',
 
     'data',
 ]
@@ -143,10 +146,19 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_THROTTLE_CLASSES': [
+        'data.throttles.RequestRateLimiter',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'users': '10/min'
+    }
 }
 
 REST_AUTH = {
     'SESSION_LOGIN': False,
+    'LOGIN_SERIALIZER': 'data.auth.serializers.LoginSerializer',
+
 }
 
 SITE_ID = 1
