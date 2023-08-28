@@ -1,0 +1,30 @@
+Refactoring test:
+    Tasks:
+        Nested data API:
+            Update /api/data/campaigns:
+                ☐ use nested object serializer: add corresponding child objects into serializer class, with many=True
+                ☐ in views, change `get_queryset` function to use prefetch_related queries
+            Update /api/data/adsets:
+                ☐ add related name in Creative model
+                ☐ in views, change `get_queryset` function to use prefetch_related queries
+            Pros/cons of prefetch_related:
+                Pros:
+                    ☐ easy to implement, can be used with either one-to-one, one-to-many and many-to-many relationships
+                Cons:
+                    ☐ this performs 2 SELECT queries so performance problem may arise if there is too many objects
+
+        Prevent spamming APIs:
+            Implement rate limiting:
+                ☐ in settings, add DEFAULT_THROTTLE_CLASSES, DEFAULT_THROTTLE_RATES in REST_FRAMEWORK dictionary
+                ☐ in views, add throttle_classes in every viewsets
+            Pros/cons of django built-in throttling:
+                Pros:
+                    ☐ Flexibility as it can implement multiple throttles to control requests
+                Cons:
+                    ☐ may affect performance as it adds overhead to processing requests
+        
+        Base Authentication Change:
+            Change username to user_id on base user model:
+                ☐ in settings, add AUTH_USER_MODEL for custom user, add LOGIN_SERIALIZER in REST_AUTH for custom login 
+                ☐ in urls, include dj_rest_auth.urls to use its login endpoint
+                ☐ in serializers, create a new class to validate user by user_id. because built-in `authentication` only accepts username and password, we need to query and get username from user object
