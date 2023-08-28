@@ -1,0 +1,7 @@
+1, Using redis + signals (post_save + post_delete for api caching) 
+2, Using nginx-rate-limit : https://vietnix.vn/huong-dan-cau-hinh-nginx-rate-limit/
+  - white list + black list if necessary
+Optional 1:
+- Inherit BaseUserManager
+  + ..
+- USERNAME_FIELD = 'user_id'
