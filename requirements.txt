@@ -1,6 +1,6 @@
 dj-rest-auth
 django
-django-allauth
+django-allauth==0.54.0
 django-filter
 djangorestframework
 faker
