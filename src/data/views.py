@@ -14,7 +14,7 @@ from .filters import CampaignFilter, AdSetFilter, CreativeFilter
 
 class CampaignViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CampaignSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
@@ -30,7 +30,7 @@ class CampaignViewSet(viewsets.ReadOnlyModelViewSet):
 
 class AdSetViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AdSetSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
@@ -46,7 +46,7 @@ class AdSetViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CreativeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CreativeSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
@@ -62,7 +62,7 @@ class CreativeViewSet(viewsets.ReadOnlyModelViewSet):
 
 class AccountViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AccountSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Account.objects.all()
