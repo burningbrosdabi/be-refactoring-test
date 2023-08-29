@@ -5,3 +5,5 @@ Optional 1:
 - Inherit BaseUserManager
   + ..
 - USERNAME_FIELD = 'user_id'
+
+enable gzip compression for nginx: https://rtcamp.com/tutorials/nginx/enable-gzip/
