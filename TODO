@@ -1,4 +1,5 @@
 1, Using redis + signals (post_save + post_delete for api caching) 
+  + can use celery worker run asynchronous in signals for better UX (trade off: task might not run)
 2, Using nginx-rate-limit : https://vietnix.vn/huong-dan-cau-hinh-nginx-rate-limit/
   - white list + black list if necessary
 Optional 1:
