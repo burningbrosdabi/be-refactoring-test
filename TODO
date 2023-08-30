@@ -8,3 +8,5 @@ Optional 1:
 - USERNAME_FIELD = 'user_id'
 
 enable gzip compression for nginx: https://rtcamp.com/tutorials/nginx/enable-gzip/
+
+can use indexing 
